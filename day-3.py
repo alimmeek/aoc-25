@@ -24,8 +24,9 @@ def pt1(battery_packs: list[list[str]]):
     return sum
 
 
-def pt2(battery_packs: list[str]):
-    total = 0
+def pt2(battery_packs: list[list[str]]):
+    sum = 0
+    
     for pack in battery_packs:
         pack_i = [int(x) for x in pack]
 
@@ -42,8 +43,9 @@ def pt2(battery_packs: list[str]):
             pack_i[positions[i]] = 0
         final_num[-1] = max(pack_i[positions[-2]+1:])
         
-        total += int("".join([str(digit) for digit in final_num]))
-    return total
+        sum += int("".join([str(digit) for digit in final_num]))
+        
+    return sum
 
 
 if __name__ == "__main__":
