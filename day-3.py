@@ -5,18 +5,19 @@ def process_file():
     return battery_packs
 
 
-def pt1(battery_packs: list[list[str]]):
+def pt1(battery_packs: list[str]):
     sum = 0
 
     for pack in battery_packs:
-        largest = sorted(pack, reverse=True)[0]
-        largest_index = pack.index(largest)
+        pack_str = [char for char in pack]
+        largest = sorted(pack_str, reverse=True)[0]
+        largest_index = pack_str.index(largest)
 
-        if (largest_index == len(pack)-1):
-            second = sorted(pack, reverse=True)[1]
+        if (largest_index == len(pack_str)-1):
+            second = sorted(pack_str, reverse=True)[1]
             joltage = int(str(second) + str(largest))
         else:
-            second = sorted(pack[largest_index+1:], reverse=True)[0]
+            second = sorted(pack_str[largest_index+1:], reverse=True)[0]
             joltage = int(str(largest) + str(second))
         
         sum += joltage
@@ -24,9 +25,9 @@ def pt1(battery_packs: list[list[str]]):
     return sum
 
 
-def pt2(battery_packs: list[list[str]]):
+def pt2(battery_packs: list[str]):
     sum = 0
-    
+
     for pack in battery_packs:
         pack_i = [int(x) for x in pack]
 
@@ -44,7 +45,7 @@ def pt2(battery_packs: list[list[str]]):
         final_num[-1] = max(pack_i[positions[-2]+1:])
         
         sum += int("".join([str(digit) for digit in final_num]))
-        
+
     return sum
 
 
