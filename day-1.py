@@ -1,10 +1,11 @@
-def process_file():
+def process_file() -> list[str]:
     with open('input.txt', 'r') as file:
         lines = [line.strip('\n') for line in file.readlines()]
     
     return lines
 
-def count_zeros_pt1(lines):
+
+def pt1(lines: list[str]) -> int:
     zero_count = 0
     current_position = 50
 
@@ -18,7 +19,8 @@ def count_zeros_pt1(lines):
 
     return zero_count
 
-def count_zeros_pt2(lines):
+
+def pt2(lines: list[str]) -> int:
     zero_count = 0
     current_position = 50
     
@@ -33,3 +35,8 @@ def count_zeros_pt2(lines):
                 zero_count += 1
 
     return zero_count
+
+
+if __name__ == "__main__":
+    print(pt1(process_file()))
+    print(pt2(process_file()))

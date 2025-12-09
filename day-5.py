@@ -1,6 +1,6 @@
 def process_file() -> tuple[list[tuple[int,int]], list[int]]:
-    intervals = []
-    ids = []
+    intervals: list[tuple[int,int]] = []
+    ids: list[int] = []
     new_line_reached = False
 
     with open('input.txt', 'r') as file:
@@ -35,7 +35,6 @@ def merge_intervals(intervals: list[tuple[int, int]]) -> list[tuple[int, int]]:
     intervals.sort(key=lambda x: x[0])
 
     merged = [intervals[0]]
-
     for start, end in intervals[1:]:
         last_start, last_end = merged[-1]
 
@@ -48,16 +47,11 @@ def merge_intervals(intervals: list[tuple[int, int]]) -> list[tuple[int, int]]:
 
 
 def pt2(intervals:list[tuple[int, int]]) -> int:
-    valid_count = 0
-
-    merged_intervals = merge_intervals(intervals)
-
-    for interval in merged_intervals:
-        valid_count += interval[1] - interval[0] + 1
-
-    return valid_count
+    return sum((interval[1] - interval[0] + 1) for interval in merge_intervals(intervals))
 
 
 if __name__ == '__main__':
     intervals, ids = process_file()
+
+    print(pt1(intervals, ids))
     print(pt2(intervals))

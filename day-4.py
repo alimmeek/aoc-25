@@ -1,11 +1,11 @@
-def process_file():
+def process_file() -> list[list[str]]:
     with open("input.txt", "r") as f:
         grid = [[char for char in line.strip('\n')] for line in f.readlines()]
     
     return grid
 
 
-def get_surrounding(grid: list[list[str]], row: int, col: int) -> int:
+def count_neighbour_arobase(grid: list[list[str]], row: int, col: int) -> int:
     surrounding = 0
 
     if col > 0:
@@ -30,7 +30,6 @@ def get_surrounding(grid: list[list[str]], row: int, col: int) -> int:
     return surrounding
 
 
-
 def pt1(grid: list[list[str]]) -> int:
     accessible = 0
     for i in range(len(grid)):
@@ -38,7 +37,7 @@ def pt1(grid: list[list[str]]) -> int:
             if grid[i][j] != '@':
                 continue
 
-            surrounding = get_surrounding(grid, i, j)
+            surrounding = count_neighbour_arobase(grid, i, j)
             
             if surrounding < 4:
                 accessible += 1
@@ -58,7 +57,7 @@ def pt2(grid: list[list[str]]) -> int:
                 if grid[i][j] != '@':
                     continue
 
-                surrounding = get_surrounding(grid, i, j)
+                surrounding = count_neighbour_arobase(grid, i, j)
                 
                 if surrounding < 4:
                     total_removed += 1
@@ -69,4 +68,5 @@ def pt2(grid: list[list[str]]) -> int:
 
 
 if __name__ == "__main__":
+    print(pt1(process_file()))
     print(pt2(process_file()))

@@ -1,11 +1,11 @@
-def process_file():
+def process_file() -> list[str]:
     with open("input.txt", "r") as f:
         battery_packs = [line.strip('\n') for line in f.readlines()]
     
     return battery_packs
 
 
-def pt1(battery_packs: list[str]):
+def pt1(battery_packs: list[str]) -> int:
     sum = 0
 
     for pack in battery_packs:
@@ -25,7 +25,7 @@ def pt1(battery_packs: list[str]):
     return sum
 
 
-def pt2(battery_packs: list[str]):
+def pt2(battery_packs: list[str]) -> int:
     sum = 0
 
     for pack in battery_packs:
@@ -50,4 +50,5 @@ def pt2(battery_packs: list[str]):
 
 
 if __name__ == "__main__":
+    print(pt1(process_file()))
     print(pt2(process_file()))

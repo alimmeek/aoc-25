@@ -1,11 +1,11 @@
-def process_file():
+def process_file() -> list[str]:
     with open("input.txt", "r") as f:
         intervals = f.readlines()[0].strip('\n').split(',')
 
     return intervals
 
 
-def pt1(intervals: list[str]):
+def pt1(intervals: list[str]) -> int:
     sum = 0
     for interval in intervals:
         low, high = interval.split('-')
@@ -24,7 +24,8 @@ def pt1(intervals: list[str]):
     
     return sum
 
-def pt2(intervals: list[str]):
+
+def pt2(intervals: list[str]) -> int:
     sum = 0
     for interval in intervals:
         low, high = interval.split('-')
@@ -44,4 +45,5 @@ def pt2(intervals: list[str]):
 
 
 if __name__ == "__main__":
+    print(pt1(process_file()))
     print(pt2(process_file()))

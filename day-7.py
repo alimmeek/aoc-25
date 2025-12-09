@@ -1,8 +1,9 @@
-def process_file():
+def process_file() -> list[list[str]]:
     with open("input.txt", "r") as f:
         grid = [[char for char in line.strip('\n')] for line in f.readlines()]
     
     return grid
+
 
 def pt1(grid: list[list[str]]) -> int:
     splits = 0
@@ -53,4 +54,5 @@ def pt2(grid: list[list[str]]) -> int:
 
 
 if __name__ == "__main__":
+    print(pt1(process_file()))
     print(pt2(process_file()))
