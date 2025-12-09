@@ -1,8 +1,16 @@
-def process_file() -> list[str]:
-    with open("input.txt", "r") as f:
-        battery_packs = [line.strip('\n') for line in f.readlines()]
-    
-    return battery_packs
+import sys
+
+from pathlib import Path
+
+
+example = """987654321111111
+811111111111119
+234234234234278
+818181911112111"""
+
+
+def process_input(text: str) -> list[str]:    
+    return text.split('\n')
 
 
 def pt1(battery_packs: list[str]) -> int:
@@ -50,5 +58,10 @@ def pt2(battery_packs: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    print(pt1(process_file()))
-    print(pt2(process_file()))
+    problem = process_input(
+        example if len(sys.argv) == 1
+        else Path(sys.argv[1]).open().read()
+    )
+
+    print(pt1(problem))
+    print(pt2(problem))

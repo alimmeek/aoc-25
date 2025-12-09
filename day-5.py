@@ -1,20 +1,36 @@
-def process_file() -> tuple[list[tuple[int,int]], list[int]]:
+import sys
+
+from pathlib import Path
+
+
+example = """3-5
+10-14
+16-20
+12-18
+
+1
+5
+8
+11
+17
+32"""
+
+
+def process_input(text: str) -> tuple[list[tuple[int,int]], list[int]]:
     intervals: list[tuple[int,int]] = []
     ids: list[int] = []
     new_line_reached = False
 
-    with open('input.txt', 'r') as file:
-        for line in file.readlines():
-            line = line.strip('\n')
-            if line == '':
-                new_line_reached = True
-                continue
+    for line in text.split('\n'):
+        if line == '':
+            new_line_reached = True
+            continue
 
-            if not new_line_reached:
-                start, end = map(int, line.split('-'))
-                intervals.append((start, end))
-            else:
-                ids.append(int(line))
+        if not new_line_reached:
+            start, end = map(int, line.split('-'))
+            intervals.append((start, end))
+        else:
+            ids.append(int(line))
     
     return intervals, ids
 
@@ -51,7 +67,10 @@ def pt2(intervals:list[tuple[int, int]]) -> int:
 
 
 if __name__ == '__main__':
-    intervals, ids = process_file()
+    intervals, ids = process_input(
+        example if len(sys.argv) == 1
+        else Path(sys.argv[1]).open().read()
+    )
 
     print(pt1(intervals, ids))
     print(pt2(intervals))

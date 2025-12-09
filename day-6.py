@@ -1,14 +1,18 @@
-def process_file() -> list[list[str]]:
-    with open("input.txt", "r") as f:
-        grid = [[word for word in line.strip('\n').split(' ')] for line in f.readlines()]
-    
-    return grid
+import sys
+
+from pathlib import Path
 
 
-def pt1(grid_p: list[list[str]]) -> int:
+example = """123 328  51 64 
+ 45 64  387 23 
+  6 98  215 314
+*   +   *   +  """
+
+
+def pt1(inp: str) -> int:
     sum = 0
 
-    grid = [[word for word in line if word != ''] for line in grid_p]
+    grid = [line.split() for line in inp.split('\n')]
 
     for j in range(len(grid[0])):
         op = grid[-1][j]
@@ -24,11 +28,10 @@ def pt1(grid_p: list[list[str]]) -> int:
     return sum
 
 
-def pt2() -> int:
+def pt2(inp: str) -> int:
     sum = 0
 
-    with open("input.txt", "r") as f:
-        grid = [[word for word in line.strip('\n')] for line in f.readlines()]
+    grid = [[char for char in line] for line in inp.split('\n')]
 
     transpose = [[grid[j][i] for j in range(len(grid)-1)] for i in range(len(grid[0]))]
     ops = [grid[-1][i] for i in range(len(grid[-1])) if grid[-1][i] in ['+', '*']]
@@ -52,5 +55,7 @@ def pt2() -> int:
 
 
 if __name__ == "__main__":
-    print(pt1(process_file()))
-    print(pt2())
+    problem = example if len(sys.argv) == 1 else Path(sys.argv[1]).open().read()
+
+    print(pt1(problem))
+    print(pt2(problem))

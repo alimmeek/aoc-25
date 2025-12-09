@@ -1,8 +1,22 @@
-def process_file() -> list[list[str]]:
-    with open("input.txt", "r") as f:
-        grid = [[char for char in line.strip('\n')] for line in f.readlines()]
-    
-    return grid
+import sys
+
+from pathlib import Path
+
+
+example = """..@@.@@@@.
+@@@.@.@.@@
+@@@@@.@.@@
+@.@@@@..@.
+@@.@@@@.@@
+.@@@@@@@.@
+.@.@.@.@@@
+@.@@@.@@@@
+.@@@@@@@@.
+@.@.@@@.@."""
+
+
+def process_input(text: str) -> list[list[str]]:
+    return [[char for char in line] for line in text.split('\n')]
 
 
 def count_neighbour_arobase(grid: list[list[str]], row: int, col: int) -> int:
@@ -68,5 +82,10 @@ def pt2(grid: list[list[str]]) -> int:
 
 
 if __name__ == "__main__":
-    print(pt1(process_file()))
-    print(pt2(process_file()))
+    problem = process_input(
+        example if len(sys.argv) == 1
+        else Path(sys.argv[1]).open().read()
+    )
+
+    print(pt1(problem))
+    print(pt2(problem))

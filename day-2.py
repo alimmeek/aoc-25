@@ -1,8 +1,13 @@
-def process_file() -> list[str]:
-    with open("input.txt", "r") as f:
-        intervals = f.readlines()[0].strip('\n').split(',')
+import sys
 
-    return intervals
+from pathlib import Path
+
+
+example = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124"
+
+
+def process_input(text: str) -> list[str]:
+    return text.strip('\n').split(',')
 
 
 def pt1(intervals: list[str]) -> int:
@@ -45,5 +50,10 @@ def pt2(intervals: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    print(pt1(process_file()))
-    print(pt2(process_file()))
+    problem = process_input(
+        example if len(sys.argv) == 1
+        else Path(sys.argv[1]).open().read()
+    )
+
+    print(pt1(problem))
+    print(pt2(problem))

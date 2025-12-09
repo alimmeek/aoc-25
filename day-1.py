@@ -1,11 +1,26 @@
-def process_file() -> list[str]:
-    with open('input.txt', 'r') as file:
-        lines = [line.strip('\n') for line in file.readlines()]
-    
-    return lines
+import sys
+
+from pathlib import Path
+
+
+example = """L68
+L30
+R48
+L5
+R60
+L55
+L1
+L99
+R14
+L82"""
+
+
+def process_input(text: str) -> list[str]:
+    return text.split('\n')
 
 
 def pt1(lines: list[str]) -> int:
+    print(lines)
     zero_count = 0
     current_position = 50
 
@@ -38,5 +53,10 @@ def pt2(lines: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    print(pt1(process_file()))
-    print(pt2(process_file()))
+    problem = process_input(
+        example if len(sys.argv) == 1
+        else Path(sys.argv[1]).open().read()
+    )
+
+    print(pt1(problem))
+    print(pt2(problem))

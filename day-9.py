@@ -1,11 +1,21 @@
+import sys
+
+from pathlib import Path
 from shapely.geometry import Polygon
 
 
-def process_file() -> list[list[int]]:
-    with open("input.txt", "r") as f:
-        corners = [[int(coord) for coord in line.strip('\n').split(',')] for line in f.readlines()]
+example = """7,1
+11,1
+11,7
+9,7
+9,5
+2,5
+2,3
+7,3"""
 
-    return corners
+
+def process_input(text: str) -> list[list[int]]:
+    return [[int(coord) for coord in line.split(',')] for line in text.split('\n')]
 
 
 def pt1(corners: list[list[int]]) -> int:
@@ -32,5 +42,10 @@ def pt2(red: list[list[int]]) -> int:
 
 
 if __name__ == "__main__":
-    print(pt1(process_file()))
-    print(pt2(process_file()))
+    problem = process_input(
+        example if len(sys.argv) == 1
+        else Path(sys.argv[1]).open().read()
+    )
+
+    print(pt1(problem))
+    print(pt2(problem))
