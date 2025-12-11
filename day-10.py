@@ -1,5 +1,6 @@
 import ast
 import numpy as np
+import pulp
 import sys
 
 from pathlib import Path
@@ -44,16 +45,32 @@ def pt1(lights: list[list[str]], buttons: list[list[list[int]]]):
     return buttons_pushed
 
 
-def pt2(lights: list[list[str]], buttons: list[list[list[int]]], joltages: list[list[int]]):
-    buttons_pushed = 0
-    
-    for k in range(1):
-        tmp = np.array([[0 for _ in range(len(lights[k]))] for _ in range(len(buttons[k]))])
-        for j in range(len(buttons[k])):
-            for idx in buttons[k][j]:
-                tmp[j][idx] = 1
-                
-    return buttons_pushed
+def pt2(buttons: list[list[list[int]]], joltages: list[list[int]]) -> int:
+    button_pushes = 0
+
+    for k in range(len(buttons)):
+        m = len(joltages[k])
+        n = len(buttons[k])
+
+        A = np.zeros((m, n), dtype=int)
+        for j, btn in enumerate(buttons[k]):
+            for i in btn:
+                A[i, j] += 1
+
+        prob = pulp.LpProblem("ButtonPushes", pulp.LpMinimize)
+        x = [pulp.LpVariable(f"x{j}", lowBound=0, cat="Integer") for j in range(n)]
+
+        prob += pulp.lpSum(x)
+
+        for i in range(m):
+            prob += pulp.lpSum(A[i, j] * x[j] for j in range(n)) == joltages[k][i]
+
+        prob.solve(pulp.PULP_CBC_CMD(msg=False))
+        solution = np.array([int(v.value()) for v in x])
+
+        button_pushes += solution.sum()
+
+    return button_pushes
 
 
 if __name__ == "__main__":
@@ -63,4 +80,4 @@ if __name__ == "__main__":
     )
 
     print(pt1(lights, buttons))
-    print(pt2(lights, buttons, joltages))
+    print(pt2(buttons, joltages))
